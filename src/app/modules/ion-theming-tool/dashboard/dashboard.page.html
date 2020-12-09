@@ -1,0 +1,101 @@
+<ion-split-pane #pane contentId="main" [when]="true">
+  <!--  the side menu  -->
+  <!-- <ion-menu contentId="main"> -->
+  <ion-content>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button [target]="'_blank'" [href]="'https://ionicframework.com/docs/theming/basics'">
+            <ion-icon name="logo-ionic"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Ionic Theming Tool</ion-title>
+      </ion-toolbar>
+
+    </ion-header>
+
+    <ng-container *ngFor="let selectedComponent of [service.selectedComponentChanges | async]">
+
+
+      <ion-header>
+        <ion-item>
+          <ion-label>
+            Select component
+          </ion-label>
+          <ion-select [(ngModel)]="service.selectedComponent" [compareWith]="compareFn" [interface]="'popover'">
+            <ion-select-option value="">Show all</ion-select-option>
+            <ion-select-option *ngFor="let component of theme.components" [value]="component">{{ component.name }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+      </ion-header>
+      <ion-list>
+        <ion-item-divider>
+          <ion-label>
+            <h2>
+              <b>Properties</b>
+            </h2>
+          </ion-label>
+        </ion-item-divider>
+        <ng-container *ngFor="let component of theme.components">
+          <ng-container *ngIf="component.tag === selectedComponent?.tag || !selectedComponent">
+            <ion-item-divider>
+              <ion-label class="ion-padding-top">
+                {{ component.name }}
+              </ion-label>
+            </ion-item-divider>
+            <ion-item *ngFor="let variable of component.variables">
+              <ion-label [position]="'stacked'">
+                {{ variable.name }}
+              </ion-label>
+              <ion-input [(ngModel)]="variable.value" (ionChange)="refreshStylesheet()">
+              </ion-input>
+            </ion-item>
+          </ng-container>
+        </ng-container>
+      </ion-list>
+    </ng-container>
+
+  </ion-content>
+  <!-- </ion-menu> -->
+
+  <!-- the main content -->
+  <div id="main">
+    <ion-header>
+      <ion-toolbar>
+        <ion-segment slot="start" scrollable [(ngModel)]="screenSize">
+          <ion-segment-button value="sm">
+            <ion-icon name="phone-portrait-outline"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="md">
+            <ion-icon name="tablet-landscape-outline"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="lg">
+            <ion-icon name="desktop-outline"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+
+        <ion-buttons slot="end">
+          <ion-button (click)="downloadCSS()">
+            Load CSS
+            <ion-icon slot="end" [name]="'cloud-upload-outline'"></ion-icon>
+          </ion-button>
+          <ion-button (click)="downloadCSS()">
+            Get CSS
+            <ion-icon slot="end" [name]="'download-outline'"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+
+    </ion-header>
+
+    <ion-content>
+
+      <iframe [class]="screenSize" loading="lazy" importance="low" src="/preview"></iframe>
+    </ion-content>
+
+
+  </div>
+</ion-split-pane>

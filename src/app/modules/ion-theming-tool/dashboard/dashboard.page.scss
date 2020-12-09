@@ -1,0 +1,25 @@
+ion-split-pane {
+    // top: 56px;
+    iframe {
+        width: 375px;
+        height: 812px;
+        border: 4px solid var(--ion-color-medium);
+        border-radius: 34px;
+        display: block;
+        margin: 30px auto;
+        transition: all ease-in-out 300ms;
+
+        &.md {
+            width: 1024px;
+            height: 768px;
+        }
+
+        &.lg {
+            width: 100%;
+            height: 100%;
+            border-width: 0;
+            margin: 0 auto;
+            border-radius: 0;
+        }
+    }
+}

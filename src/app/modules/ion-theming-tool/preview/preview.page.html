@@ -1,0 +1,20 @@
+<ion-content *ngFor="let selectedComponent of [service.selectedComponentChanges | async]">
+
+  <ion-grid>
+
+    <ng-container *ngFor="let component of theme.components">
+      <ion-row *ngIf="component.tag === selectedComponent?.tag || !selectedComponent">
+        <ion-col size="12" class="ion-padding-top">
+          <ion-title>
+            {{ component.name }}
+          </ion-title>
+        </ion-col>
+        <ion-col size="12">
+          <ion-button-examples *ngIf="component?.tag.match('ion-button')"></ion-button-examples>
+          <ion-alert-examples *ngIf="component?.tag.match('ion-alert')"></ion-alert-examples>
+          <ion-card-examples *ngIf="component?.tag.match('ion-card')"></ion-card-examples>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+  </ion-grid>
+</ion-content>

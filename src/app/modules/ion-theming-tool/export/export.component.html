@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <input type="hidden">
+      <ion-button (click)="copyToClipboard(cssData)">
+        <ion-icon slot="start" [name]="status==='copied' ? 'checkmark-outline' : 'clipboard-outline'"></ion-icon>
+        {{ status }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-item>
+    <ion-textarea [readonly]="true" [(ngModel)]="data" [autoGrow]="true" #cssData>
+
+    </ion-textarea>
+  </ion-item>
+</ion-content>
