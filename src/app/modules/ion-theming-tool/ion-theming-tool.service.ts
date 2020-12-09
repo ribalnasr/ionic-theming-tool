@@ -84,17 +84,24 @@ ${componentStyles}
     return styles;
   }
 
-  public refreshStylesheet(getStylesheet: string) {
+  public refreshStylesheet(getStylesheet: string, iframe?: boolean) {
 
 
 
-    let stylesheet = document.querySelector('style#ionicStylesheet');
-    if (!stylesheet) {
-      const styleTag = document.createElement('style');
-      styleTag.id = 'ionicStylesheet';
-      document.querySelector('head').appendChild(styleTag);
+    let contentDocument: Document;
+    if (iframe) {
+      contentDocument = document.querySelector('iframe').contentDocument;
+    } else {
+      contentDocument = document;
     }
-    stylesheet = document.querySelector('style#ionicStylesheet');
+
+    let stylesheet = contentDocument.querySelector('style#ionicStylesheet');
+    if (!stylesheet) {
+      const styleTag = contentDocument.createElement('style');
+      styleTag.id = 'ionicStylesheet';
+      contentDocument.querySelector('head').appendChild(styleTag);
+    }
+    stylesheet = contentDocument.querySelector('style#ionicStylesheet');
     stylesheet.textContent = this.getStylesheet(getStylesheet)
     // console.log(stylesheet.innerHTML)
   }

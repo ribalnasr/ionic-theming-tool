@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, NgZone, OnChanges, OnInit } from '@angular/core';
 import { IonTextarea } from '@ionic/angular';
 
 @Component({
@@ -12,10 +12,21 @@ export class ExportComponent implements OnInit {
 
   public status: 'copied' | 'copying' | 'copy' = 'copy';
 
-  constructor() { }
+  constructor(
+    private zone: NgZone
+  ) { }
 
   ngOnInit() {
     console.log(this.data)
+    this.zone.runOutsideAngular(() => {
+      const data = this.data;
+      this.data = '';
+      setTimeout(() => {
+        this.zone.run(() => {
+          this.data = data
+        })
+      }, 200)
+    })
 
   }
 

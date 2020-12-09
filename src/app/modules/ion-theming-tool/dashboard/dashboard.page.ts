@@ -24,6 +24,7 @@ export class DashboardPage implements OnInit {
 
   public refreshStylesheet() {
     this.service.refreshStylesheet('default');
+    this.service.refreshStylesheet('default', true);
   }
 
   public async downloadCSS() {
